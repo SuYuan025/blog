@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const app = express();
-const { connectDB } = require('./db/dbUtils');
+const { connectDB } = require('./db/dbUtils.js');
 const port = 1025
 
 app.use(function (req, res, next) {
