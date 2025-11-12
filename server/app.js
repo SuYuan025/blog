@@ -1,2 +1,40 @@
 const express = require('express');
-const app = express
+const multer = require('multer');
+const app = express();
+const { connectDB } = require('./db/dbUtils');
+const port = 1025
+
+app.use(function (req, res, next) {
+  // 设置允许跨域的域名
+  res.header("Access-Control-Allow-Origin", "*");
+  // 设置允许跨域的请求方法
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  // 设置允许跨域的请求头
+  res.header("Access-Control-Allow-Headers", "*");
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+})
+
+app.use(express.json());
+
+// 连接到 MySQL 数据库
+connectDB();
+
+const upload = multer({
+  dest: './public/uploads/temp',
+})
+app.use(upload.any())
+
+app.use('/test', require('./routers/testrouter.js'))
+
+// 添加 favicon 处理
+app.get('/favicon.ico', (req, res) => {
+  res.status(204).end(); // 返回空响应
+})
+
+app.listen(port, () => {
+  console.log(`启动成功: http://localhost:${port}/`);
+})
