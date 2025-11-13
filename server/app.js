@@ -23,12 +23,15 @@ app.use(express.json());
 // 连接到 MySQL 数据库
 connectDB();
 
+// 上传
 const upload = multer({
   dest: './public/uploads/temp',
 })
 app.use(upload.any())
 
+// 路由
 app.use('/test', require('./routers/testrouter.js'))
+app.use('/admin', require('./routers/adminRouter.js'))
 
 // 添加 favicon 处理
 app.get('/favicon.ico', (req, res) => {

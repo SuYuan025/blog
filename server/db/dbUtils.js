@@ -17,10 +17,10 @@ const genId = new GenId({ WorkerId: 1 });
 const connectDB = async () => {
   try {
     const connection = await pool.getConnection();
-    console.log('连接成功');
+    console.log('连接数据库成功');
     connection.release();
   } catch (error) {
-    console.error('连接失败:', error);
+    console.error('连接数据库失败:', error);
   }
 };
 
