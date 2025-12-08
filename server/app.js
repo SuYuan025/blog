@@ -33,6 +33,7 @@ app.use(upload.any())
 app.use('/test', require('./routers/testrouter.js'))
 app.use('/admin', require('./routers/adminRouter.js'))
 app.use('/category', require('./routers/categoryRouter.js'))
+app.use('/blog', require('./routers/blogRouter.js'))
 
 // 添加 favicon 处理
 app.get('/favicon.ico', (req, res) => {
