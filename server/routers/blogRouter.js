@@ -89,7 +89,7 @@ router.get('/search', async (req, res) => {
       params.push(parseInt(categoryId))
     }
     if (keyword) {
-      whereSqls.push(' title like ? or content like ? ')
+      whereSqls.push(' (title like ? or content like ?) ')
       params.push(`%${keyword}%`)
       params.push(`%${keyword}%`)
     }
