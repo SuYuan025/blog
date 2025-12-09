@@ -27,13 +27,36 @@ connectDB();
 const upload = multer({
   dest: './public/uploads/temp',
 })
-app.use(upload.any())
+
+// 使用Multer中间件并添加错误处理
+app.use((req, res, next) => {
+  upload.any()(req, res, (err) => {
+    if (err) {
+      // 处理"Field name missing"错误
+      if (err.code === 'LIMIT_FIELD_NAME') {
+        res.status(400).send({
+          errno: 1,
+          message: '上传失败：请为文件指定字段名（键名）'
+        });
+        return;
+      }
+      // 处理其他Multer错误
+      res.status(400).send({
+        errno: 1,
+        message: '上传失败：' + err.message
+      });
+      return;
+    }
+    next();
+  });
+});
 
 // 路由
 app.use('/test', require('./routers/testrouter.js'))
 app.use('/admin', require('./routers/adminRouter.js'))
 app.use('/category', require('./routers/categoryRouter.js'))
 app.use('/blog', require('./routers/blogRouter.js'))
+app.use('/upload', require('./routers/uploadRouter.js'))
 
 // 添加 favicon 处理
 app.get('/favicon.ico', (req, res) => {
