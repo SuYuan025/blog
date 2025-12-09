@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const app = express();
-const { connectDB } = require('./db/dbUtils.js');
+const { connectDB, db } = require('./db/dbUtils.js');
 const port = 1025
 
 app.use(function (req, res, next) {
@@ -53,6 +53,27 @@ app.use((req, res, next) => {
 });
 // 静态文件
 app.use(express.static(path.join(__dirname, 'public')));
+
+const ADMIN_TOKEN = '/_token'
+app.use( async (req, res, next) => {
+  if(req.path.indexOf(ADMIN_TOKEN) > -1) {
+    let { token } = req.headers
+
+    let admin_token_sql = 'select * from admin where token = ?'
+    let adminResult = await db.all(admin_token_sql, [token])
+    if (adminResult.data.length == 0) {
+      res.send({
+        code: 403,
+        msg: '请先登录'
+      })
+      return
+    }else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
 
 // 路由
 app.use('/test', require('./routers/testrouter.js'))

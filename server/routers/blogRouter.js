@@ -3,7 +3,7 @@ const router = express.Router()
 const { db, genId } = require('../db/dbUtils.js')
 
 // 添加博客
-router.post('/add', async (req, res) => {
+router.post('/_token/add', async (req, res) => {
   try {
     let { title, categoryId, content } = req.body
     let id = genId.NextId()
@@ -28,7 +28,7 @@ router.post('/add', async (req, res) => {
 })
 
 // 删除博客
-router.delete('/delete', async (req, res) => {
+router.delete('/_token/delete', async (req, res) => {
   try {
     let id = req.query.id
     const delete_sql = 'delete from blog where id = ?'
@@ -49,7 +49,7 @@ router.delete('/delete', async (req, res) => {
 })
 
 // 修改博客
-router.put('/update', async (req, res) => {
+router.put('/_token/update', async (req, res) => {
   try {
     let { id, title, categoryId, content } = req.body
     let create_time = new Date().getTime()

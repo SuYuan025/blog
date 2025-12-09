@@ -3,7 +3,7 @@ const router = express.Router()
 const { db, genId } = require('../db/dbUtils.js')
 
 // 添加
-router.post('/add', async (req, res) => {
+router.post('/_token/add', async (req, res) => {
   try {
     let { name } = req.body
     const insert_sql = 'insert into category ( id, name ) values ( ?, ? )'
@@ -22,7 +22,7 @@ router.post('/add', async (req, res) => {
 })
 
 // 删除
-router.delete('/delete', async (req, res) => {
+router.delete('/_token/delete', async (req, res) => {
   try {
     let id = req.query.id
     const delete_sql = 'delete from category where id = ?'
@@ -41,7 +41,7 @@ router.delete('/delete', async (req, res) => {
 })
 
 // 修改
-router.put('/update', async (req, res) => {
+router.put('/_token/update', async (req, res) => {
   try {
     let { id, name } = req.body
     const update_sql = 'update category set name = ? where id = ?'
