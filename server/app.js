@@ -51,6 +51,7 @@ app.use((req, res, next) => {
     next();
   });
 });
+// 静态文件
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 路由
