@@ -22,7 +22,7 @@ router.post('/login', async (req, res) => {
 
     let admin_info = result.data[0]
     admin_info.token = login_token
-    admin_info.password = ''
+    // admin_info.password = ''
 
     res.send({
       code: 200,
