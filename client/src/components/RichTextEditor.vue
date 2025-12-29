@@ -1,22 +1,11 @@
 <template>
-    <div>
-      <Toolbar
-        :editor="editorRef"
-        :defaultConfig="toolbarConfig"
-        :mode="mode"
-        style="border-bottom: 1px solid #ccc"
-      />
-      <Editor
-        :defaultConfig="editorConfig"
-        :mode="mode"
-        v-model="valueHtml"
-        style="height: 400px; overflow-y: hidden"
-        @onCreated="handleCreated"
-        @onChange="handleChange"
-      />
-    </div>
+  <div>
+    <Toolbar :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" style="border-bottom: 1px solid #ccc" />
+    <Editor :defaultConfig="editorConfig" :mode="mode" v-model="valueHtml" style="height: 400px; overflow-y: hidden"
+      @onCreated="handleCreated" @onChange="handleChange" />
+  </div>
 </template>
-  
+
 <script setup lang='ts'>
 import '@wangeditor/editor/dist/css/style.css'
 import { onBeforeUnmount, ref, shallowRef, watch, inject } from 'vue';
@@ -35,12 +24,13 @@ editorConfig.MENU_CONF['uploadImage'] = {
 }
 
 editorConfig.MENU_CONF['insertImage'] = {
-  parseImageSrc: (src: string) => {
-    // 如果是相对路径，则补全为完整路径
-    if (src && !src.startsWith('http')) {
-      return `${serverUrl}${src}`;
+  parseImageSrc: (src: any) => {
+    const raw = typeof src === 'string' ? src : (src?.toString ? src.toString() : '')
+    if (!raw) return ''
+    if (!raw.startsWith('http')) {
+      return `${serverUrl ?? ''}${raw}`;
     }
-    return src;
+    return raw;
   },
 }
 
@@ -65,8 +55,9 @@ const handleCreated = (editor: any) => {
   editorRef.value = editor;
   // 编辑器创建后，设置初始内容
   if (props.modelValue) {
-    editor.setHtml(props.modelValue);
-    valueHtml.value = props.modelValue;
+    const safe = typeof props.modelValue === 'string' ? props.modelValue : String(props.modelValue ?? '')
+    editor.setHtml(safe);
+    valueHtml.value = safe;
   }
 };
 
@@ -77,13 +68,13 @@ const handleChange = (editor: any) => {
 };
 
 watch(() => props.modelValue, (newVal) => {
-  if (editorRef.value && newVal !== valueHtml.value) {
-    editorRef.value.setHtml(newVal);
-    valueHtml.value = newVal;
+  if (!editorRef.value) return
+  const safe = typeof newVal === 'string' ? newVal : String(newVal ?? '')
+  if (safe !== valueHtml.value) {
+    editorRef.value.setHtml(safe);
+    valueHtml.value = safe;
   }
 });
 </script>
-  
-<style scoped>
-  
-</style>
+
+<style scoped></style>

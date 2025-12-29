@@ -55,8 +55,8 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 const ADMIN_TOKEN = '/_token'
-app.use( async (req, res, next) => {
-  if(req.path.indexOf(ADMIN_TOKEN) > -1) {
+app.use(async (req, res, next) => {
+  if (req.path.indexOf(ADMIN_TOKEN) > -1) {
     let { token } = req.headers
 
     let admin_token_sql = 'select * from admin where token = ?'
@@ -67,7 +67,7 @@ app.use( async (req, res, next) => {
         msg: '请先登录'
       })
       return
-    }else {
+    } else {
       next()
     }
   } else {

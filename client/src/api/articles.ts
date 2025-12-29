@@ -1,11 +1,19 @@
 import axios from "axios";
 
-// 获取文章列表
+// 获取文章
 export async function getArticles(params?: any) {
   return axios({
     url: "/blog/search",
     method: "get",
-    params
+    params,
+  });
+}
+
+// 获取文章详情
+export async function getArticle(id: any) {
+  return axios({
+    url: `/blog/detail?id=${id}`,
+    method: "get",
   });
 }
 
@@ -32,5 +40,5 @@ export async function updateArticle(data: any) {
     url: "/blog/_token/update",
     method: "put",
     data,
-  })
+  });
 }

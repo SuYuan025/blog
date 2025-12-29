@@ -35,7 +35,7 @@ router.post('/rich_editor_upload', async (req, res) => {
   res.send({
     errno: 0,
     data: {
-      url: ret_files[0],
+      url: ret_files[0].url,
     }
   })
 

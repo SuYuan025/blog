@@ -14,7 +14,7 @@
       <n-button @click="cancelCategory" v-if="value || pageInfo.keyword">清空筛选</n-button>
     </n-space>
     <div v-for="(item, index) in blogList" :key="index" style="margin-bottom: 15px; cursor: pointer;">
-      <n-card :title="item.title">
+      <n-card :title="item.title" @click="router.push(`/detail/${item.id}`)">
         <n-ellipsis :line-clamp="2" :tooltip="false">
           <div v-html="item.content"></div>
         </n-ellipsis>

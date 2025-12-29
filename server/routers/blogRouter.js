@@ -133,4 +133,23 @@ router.get('/search', async (req, res) => {
   }
 })
 
+// 查询博客详情
+router.get('/detail', async (req, res) => {
+  try {
+    const id = req.query.id
+    if (!id) {
+      return res.send({ code: 400, msg: '缺少参数 id' })
+    }
+    const sql = 'select * from blog where id = ? limit 1'
+    const result = await db.all(sql, [id])
+    const row = result.data && result.data.length ? result.data[0] : null
+    if (!row) {
+      return res.send({ code: 404, msg: '未找到文章' })
+    }
+    res.send({ code: 200, msg: '查询成功', data: row })
+  } catch (error) {
+    res.send({ code: 500, msg: '查询失败' })
+  }
+})
+
 module.exports = router
