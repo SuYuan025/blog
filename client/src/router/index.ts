@@ -10,7 +10,8 @@ let routes: any = [
       { path: "/dashboard/articles", name: "文章管理", component: () => import("@/views/dashboard/articles.vue")},
       { path: "/dashboard/categories", name: "分类管理", component: () => import("@/views/dashboard/categories.vue")},
     ]
-  }
+  },
+  { path: "/", name: "主页", component: () => import("@/views/index/index.vue") }
 ];
 
 const router = createRouter({

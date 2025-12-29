@@ -1,11 +1,11 @@
 <template>
   <n-tabs type="line" v-model:value="tabRef" animated>
     <n-tab-pane name="list" tab="文章列表">
-      <div v-for="(item,index) in blogList" :key="index" style="margin-bottom: 15px;">
+      <div v-for="(item, index) in blogList" :key="index" style="margin-bottom: 15px;">
         <n-card :title="item.title">
-            <n-ellipsis :line-clamp="2" :tooltip="false">
-              <div v-html="item.content"></div>
-            </n-ellipsis>
+          <n-ellipsis :line-clamp="2" :tooltip="false">
+            <div v-html="item.content"></div>
+          </n-ellipsis>
           <template #footer>
             <n-space justify="space-between" align="center">
               <div>发布时间: {{ item.create_time }}</div>
@@ -20,7 +20,8 @@
           </template>
         </n-card>
       </div>
-      <n-pagination v-model:page="page" :item-count="total" :page-size="pageSize" @update:page="loadData" v-if="total > pageSize" />
+      <n-pagination v-model:page="pageInfo.page" :item-count="pageInfo.total" :page-size="pageInfo.pageSize"
+        @update:page="loadData" v-if="pageInfo.total > pageInfo.pageSize" />
     </n-tab-pane>
     <n-tab-pane name="add" tab="添加文章">
       <n-form ref="formRef" :model="articles" :rules="rules">
@@ -46,7 +47,7 @@
         </n-form-item>
         <n-form-item label="内容">
           <RichTextEditor v-model="articles.content" />
-        </n-form-item> 
+        </n-form-item>
         <n-button type="primary" @click="edit">提交</n-button>
       </n-form>
     </n-tab-pane>
@@ -54,7 +55,7 @@
 </template>
 
 <script setup lang='ts'>
-import { ref, inject } from 'vue'
+import { ref, reactive, inject } from 'vue'
 import { getCategories } from '@/api/categories'
 import RichTextEditor from '@/components/RichTextEditor.vue'
 import { addArticle, updateArticle, deleteArticle, getArticles } from '@/api/articles'
@@ -81,10 +82,13 @@ const categoryMap = ref(new Map<number, string>())
 
 const message = inject('message') as any
 const dialog = inject('dialog') as any
-const page = ref(1)
-const pageSize = ref(6)
-const total = ref(0)
 const tabRef = ref('list')
+
+const pageInfo = reactive({
+  page: 1,
+  pageSize: 6,
+  total: 0
+})
 
 const rules = {
   title: [
@@ -167,7 +171,7 @@ const remove = (id: number) => {
 
 const loadData = async () => {
   const categoriesRes = await getCategories()
-  const articlesRes = await getArticles({ page: page.value, pageSize: pageSize.value })
+  const articlesRes = await getArticles({ page: pageInfo.page, pageSize: pageInfo.pageSize })
   if (categoriesRes.data.code === 200) {
     articles.value.generaOptions = categoriesRes.data.data.map((item: any) => ({
       label: item.name,
@@ -176,7 +180,7 @@ const loadData = async () => {
     categoryMap.value = new Map(categoriesRes.data.data.map((item: any) => [item.id, item.name]))
   }
   if (articlesRes.data.code === 200) {
-    total.value = articlesRes.data.data.total
+    pageInfo.total = articlesRes.data.data.total
     blogList.value = articlesRes.data.data.list
     blogList.value.forEach(item => {
       if (item.create_time) {

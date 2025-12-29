@@ -1,21 +1,17 @@
 <template>
   <div class="title">后台管理</div>
-    <div class="main-panel">
-      <div class="menus">
-        <div 
-          v-for="(item, index) in menus" 
-          :key="index" 
-          @click="toPage(item.href)"
-        >
-          {{ item.name }}
-        </div>
-      </div>
-      <div style="padding: 20px; width: 100%;">
-        <router-view />
+  <div class="main-panel">
+    <div class="menus">
+      <div v-for="(item, index) in menus" :key="index" @click="toPage(item.href)">
+        {{ item.name }}
       </div>
     </div>
+    <div style="padding: 20px; width: 100%;">
+      <router-view />
+    </div>
+  </div>
 </template>
-  
+
 <script setup lang='ts'>
 import { useRouter, useRoute } from 'vue-router'
 import { onMounted } from 'vue'
@@ -37,13 +33,13 @@ onMounted(() => {
 
 const toPage = (href: string) => {
   if (href === 'logout') {
-    router.push('/login')
+    router.push('/')
   } else {
     router.push(href)
   }
 }
 </script>
-  
+
 <style scoped>
 .main-panel {
   display: flex;
@@ -73,6 +69,7 @@ const toPage = (href: string) => {
 
   div {
     cursor: pointer;
+
     &:hover {
       color: #fd760e;
     }
