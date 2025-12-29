@@ -7,8 +7,10 @@
 </template>
 
 <script setup lang='ts'>
+// @ts-ignore
 import '@wangeditor/editor/dist/css/style.css'
 import { onBeforeUnmount, ref, shallowRef, watch, inject } from 'vue';
+// @ts-ignore
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 
 const serverUrl = inject('serverUrl');
