@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.13.2",
     "naive-ui": "^2.43.2",
     "pinia": "^3.0.4",

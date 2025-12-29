@@ -33,6 +33,7 @@ app.provide('axios', axios)
 app.provide("message", message);
 app.provide('dialog', dialog)
 app.provide('notification', notification)
+app.provide("serverUrl", axios.defaults.baseURL);
 
 app.use(naive)
 app.use(pinia)

@@ -58,7 +58,6 @@ const categoryList = ref<Category[]>([])
 const category = reactive({ id: 0, name: '' })
 const addModal = ref(false)
 const editModal = ref(false)
-const deleteModal = ref(false)
 const message = inject('message') as any
 const dialog = inject('dialog') as any
 
@@ -106,14 +105,10 @@ const remove = (id: number) => {
       const res = await deleteCategory(id)
       if (res.data.code === 200) {
         message.success('删除成功')
-        deleteModal.value = false
         loadData()
       } else {
         message.error(`\ ${res.data.msg}`)
       }
-    },
-    onNegativeClick: () => {
-      deleteModal.value = false
     }
   })
 }
