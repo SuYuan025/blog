@@ -61,7 +61,7 @@ app.use( async (req, res, next) => {
 
     let admin_token_sql = 'select * from admin where token = ?'
     let adminResult = await db.all(admin_token_sql, [token])
-    if (adminResult.data.length == 0) {
+    if (!adminResult.success || !adminResult.data || adminResult.data.length == 0) {
       res.send({
         code: 403,
         msg: '请先登录'

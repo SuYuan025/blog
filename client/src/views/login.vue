@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { ref, inject } from 'vue'
-import { login } from '@/request/login'
+import { login } from '@/api/login'
 import { adminStore } from '@/stores/adminStore'
 import { useRouter } from 'vue-router'
 const router = useRouter()
