@@ -29,8 +29,8 @@
     <n-pagination v-model:page="pageInfo.page" :item-count="pageInfo.total" :page-size="pageInfo.pageSize"
       @update:page="loadData" v-if="pageInfo.total > pageInfo.pageSize" />
     <div class="footer">
-      <div>power by XXX</div>
-      <div>XICP备XXXXXX号</div>
+      <div @click="handleLinkClick('https://www.bilibili.com/video/BV1t3411F7VH')">power by B站:明明明明明歌</div>
+      <div @click="handleLinkClick('https://beian.miit.gov.cn/#/Integrated/index')">豫ICP备2025147378号</div>
     </div>
   </div>
 </template>
@@ -76,6 +76,10 @@ const cancelCategory = () => {
   value.value = null
   pageInfo.keyword = ''
   loadData()
+}
+
+const handleLinkClick = (url: string) => {
+  window.open(url, '_blank')
 }
 
 const loadData = async () => {
@@ -144,5 +148,13 @@ loadData()
   text-align: center;
   line-height: 25px;
   color: #64676a;
+
+  div {
+    cursor: pointer;
+
+    &:hover {
+      color: #f60;
+    }
+  }
 }
 </style>
