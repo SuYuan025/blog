@@ -30,7 +30,7 @@
       @update:page="loadData" v-if="pageInfo.total > pageInfo.pageSize" />
     <div class="footer">
       <div @click="handleLinkClick('https://www.bilibili.com/video/BV1t3411F7VH')">power by B站:明明明明明歌</div>
-      <div @click="handleLinkClick('https://beian.miit.gov.cn/#/Integrated/index')">豫ICP备2025147378号</div>
+      <div @click="handleLinkClick('https://beian.miit.gov.cn')">豫ICP备2025147378号</div>
     </div>
   </div>
 </template>
@@ -69,7 +69,7 @@ const home = () => {
 }
 
 const dashboard = () => {
-  router.push('/login')
+  router.push('/dashboard')
 }
 
 const cancelCategory = () => {
