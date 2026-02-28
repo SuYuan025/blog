@@ -46,33 +46,54 @@ const toPage = (href: string) => {
   color: #64676a;
   max-width: 1500px;
   margin: 0 auto;
+  flex-direction: column;
 }
 
 .title {
-  width: 1500px;
+  width: 100%;
   font-size: 24px;
   font-weight: bold;
   color: #64676a;
   margin: 0 auto;
   text-align: center;
   background: #dadada;
+  padding: 10px 0;
 }
 
 .menus {
   padding: 20px 0;
   box-sizing: border-box;
-  line-height: 55px;
+  line-height: 40px;
   text-align: center;
-  width: 180px;
-  height: 95vh;
+  width: 100%;
   border: 1px solid #dadada;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 
   div {
     cursor: pointer;
+    margin: 0 15px;
 
     &:hover {
       color: #fd760e;
     }
+  }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .title {
+    font-size: 20px;
+  }
+
+  .menus {
+    line-height: 30px;
+  }
+
+  .menus div {
+    margin: 0 10px;
   }
 }
 </style>

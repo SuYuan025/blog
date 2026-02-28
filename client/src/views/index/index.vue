@@ -19,7 +19,7 @@
           <div v-html="item.content"></div>
         </n-ellipsis>
         <template #footer>
-          <n-space justify="space-between" align="center">
+          <n-space justify="space-between" align="center" class="article-meta">
             <div>发布时间: {{ item.create_time }}</div>
             <div>分类: {{ categoryMap.get(item.category_id) ?? '未知分类' }}</div>
           </n-space>
@@ -116,12 +116,14 @@ loadData()
 
 <style scoped>
 .container {
-  width: 1200px;
   margin: 0 auto
 }
 
 .search {
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .nav {
@@ -129,10 +131,12 @@ loadData()
   font-size: 20px;
   padding-top: 20px;
   color: #64676a;
+  flex-wrap: wrap;
 
   div {
     cursor: pointer;
     margin-right: 15px;
+    margin-bottom: 10px;
 
     &:hover {
       color: #f60;

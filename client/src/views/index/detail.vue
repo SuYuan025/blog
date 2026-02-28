@@ -3,7 +3,7 @@
     <n-button @click="$router.back()" style="margin-top: 20px;">返回</n-button>
     <n-h1>{{ article.title }}</n-h1>
     <div v-html="article.content" class="blog-content"></div>
-    <n-space justify="space-between" align="center" style="font-size: 20px;">
+    <n-space justify="space-between" align="center" style="font-size: 20px;" class="article-meta">
       <div>发布时间: {{ article.create_time }}</div>
       <div>分类: {{ categoryMap.get(article.category_id) ?? '未知分类' }}</div>
     </n-space>
@@ -52,7 +52,6 @@ onMounted(() => {
 
 <style scoped>
 .container {
-  width: 1200px;
   margin: 0 auto;
 }
 </style>
